@@ -63,7 +63,7 @@ const ClientPortfolioPage = () => {
             </div>
           </div>
           <div className="main-content-img">
-            <img src="/public/my-image.png" alt="" />
+            <img src="/my-image.png" alt="" />
           </div>
         </div>
         <div className="statistics">
