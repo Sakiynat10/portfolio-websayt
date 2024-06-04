@@ -120,7 +120,7 @@ const RegisterPage = () => {
             span: 24,
           }}
         >
-          <Button loading={loading} type="primary" htmlType="submit">
+          <Button style={{width:"100%"}} loading={loading} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>

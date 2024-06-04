@@ -4,16 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSkills } from "../../../redux/slice/skill";
 import CountUp from "react-countup";
 
-
 import { Statistic } from "antd";
-
-import {FileTextOutlined , FileSyncOutlined, CheckCircleTwoTone} from "@ant-design/icons"
-
+import {FileTextOutlined , FileSyncOutlined, CheckCircleTwoTone, ScheduleOutlined} from "@ant-design/icons"
 
 import "./index.scss"
 import { getExperiences } from "../../../redux/slice/experience";
+import { useGetEducationsQuery } from "../../../redux/query/education";
 
 const DashboardPage = () => {
+  const {data , refetch} = useGetEducationsQuery();
+  const educationTotal = data?.pagination?.total;
+
   const formatter = (value) => <CountUp end={value} separator="," />;
 
 
@@ -70,6 +71,27 @@ const DashboardPage = () => {
                   display: "flex",
                 }}
                 value={ t2}
+                formatter={formatter}
+                title={
+                  <CheckCircleTwoTone />
+                }
+              />
+            </div>
+          </div>
+          <div className="info-tables">
+            <div className="card-salary">
+              <span className="money-card-fee" style={{backgroundColor:"yellow"}}>
+                <ScheduleOutlined fill="white" color="white" />
+              </span>
+              <span className="salary-title" style={{fontSize:"32px"}}>All Education</span>
+              <Statistic
+                className="statistics"
+                style={{
+                  marginTop:"70px",
+                  paddingTop:"30px",
+                  display: "flex",
+                }}
+                value={ educationTotal}
                 formatter={formatter}
                 title={
                   <CheckCircleTwoTone />

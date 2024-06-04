@@ -1,27 +1,34 @@
 import { Fragment } from "react";
+import Typewriter from "typewriter-effect";
 
-import "./index.scss";
+
 import { Flex } from "antd";
+import "./index.scss";
+
 
 const HomePage = () => {
   return (
     <Fragment>
-      <Flex className="container hero"  >
-      <img className="hero-img" src="/my-image.png" alt="" />
-      <Flex className="hero-container ">
-        <h2>Hello , Mrs</h2>
-        <h1>Asilbek Xoliyorov</h1>
-        <h2>And I`m a Frontend Developer</h2>
-        <h2>
+      <Flex className="hero hero-container">
+        <h1 className="hero-title">
+        <Typewriter
+                options={{
+                  strings: ["Create the portfolio of your dreams!!!", "Achieve your goals  with us !!!"],
+                  autoStart: true,
+                  loop: true,
+                }} 
+        />
+        </h1>
+        <h2 className="hero-desc">
           You may use this website to make your private portfolio.It is so easy
           with us.If you want to start now, you can get 20% discount price for
-          your portfolio
+          your portfolio.In this portfolio , you can download your CV that is so vital for you to 
+          apply a job.
         </h2>
         <div className="hero-btn-group">
           <a href="#contact">Contact with me</a>
           <a href="resume">My resume</a>
         </div>
-      </Flex>
       </Flex>
     </Fragment>
   );
