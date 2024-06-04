@@ -8,7 +8,7 @@ const ClientCard = ({ photo, firstName, lastName, username, info , _id }) => {
     <div className="client-content container">
       <div className="client-card">
         <div className="client-img">
-            <img src={"/public/my-image.png"} alt={photo} />
+            <img src={"/my-image.png"} alt={photo} />
         </div>
         <div className="client-infos">
           <h2 style={{ color: "white" }}>{firstName}</h2>
