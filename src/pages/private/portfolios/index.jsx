@@ -13,7 +13,7 @@ const PortfoliosPage = () => {
   const {user} = useSelector(state => state.auth)
   const [page , setPage] = useState(1)
   // const portfolio = user?.role === 'client' ?  user: user?._id : data?.data;
-  const {data , isFetching , refetch} = useGetPortfoliosQuery( user?.role === "client" ? {user: user?._id, page} : null)
+  const {data , isFetching , refetch} = useGetPortfoliosQuery( user?.role === "client" ? {user: user?._id, page} : {page})
   const [deletePortfolio] = useDeletePortfolioMutation();
   const [createPortfolio] = useCreatePortfolioMutation();
   const [updatePortfolio] = useUpdatePortfolioMutation();

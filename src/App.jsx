@@ -9,8 +9,9 @@ import { useSelector } from "react-redux";
 import LoginPage from "./pages/public/login";
 import RegisterPage from "./pages/public/register";
 import useRolePages from "./hooks/usePages";
-import ClientsPage from "./components/layout/public/clients";
+import ClientsPage from "./pages/client/clients";
 import ClientPortfolioPage from "./pages/public/client-portfolio/client-portfolio";
+import PortfolioLayout from "./components/portfolio";
 
 // import AccountPage from "./pages/private/account";
 // import PortfoliosPage from "./pages/private/portfolios";
@@ -31,7 +32,6 @@ const App = () => {
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
           <Route path="clients" element={<ClientsPage />} />
-          <Route path="portfolios" element={<ClientPortfolioPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>
@@ -39,6 +39,9 @@ const App = () => {
           {rolePages.map(({ url, page: Page }) => (
             <Route key={url} path={url} element={<Page />} />
           ))}
+        </Route>
+        <Route element={<PortfolioLayout/>}>
+          <Route path="/clients/:userId" element={<ClientPortfolioPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

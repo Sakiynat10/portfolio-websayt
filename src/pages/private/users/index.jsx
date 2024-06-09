@@ -1,9 +1,28 @@
-import { Button, Input, Modal, Pagination, Table, Form, Flex } from "antd";
+import {
+  Button,
+  Input,
+  Modal,
+  Pagination,
+  Table,
+  Form,
+  Flex,
+  Image,
+  Select,
+  DatePicker,
+  Space,
+} from "antd";
 import { Fragment, useEffect } from "react";
-import { LIMIT } from "../../../components/cosnt";
+import { BASE, LIMIT } from "../../../components/cosnt";
 import useUsers from "../../../zustand/users";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 import "react-tabs/style/react-tabs.css";
+
+import "./index.scss"
+
+const onChange = (date, dateString) => {
+  console.log(date, dateString);
+};
 
 const { useForm } = Form;
 
@@ -22,21 +41,29 @@ const UsersPage = () => {
     editUser,
     showModal,
     submit,
-
+    photo,
+    handlePhoto,
+    deleteUserPhoto,
+    checkPhoto,
   } = useUsers();
 
   const [form] = useForm();
-
+  console.log(checkPhoto);
   useEffect(() => {
     getUsers();
   }, [getUsers]);
 
   console.log(users);
 
-
-  // let clients = users.filter((client) => client.role === "client")
-
   const columns = [
+    {
+      title: "Photo",
+      dataIndex: "photo",
+      key: "photo",
+      render: (photo) => (
+        <Image width={50} height={50} src={`${BASE}upload/${photo}`} alt="" />
+      ),
+    },
     {
       title: "Firstname",
       dataIndex: "firstName",
@@ -62,16 +89,8 @@ const UsersPage = () => {
       dataIndex: "phoneNumber",
       key: "phoneNumber",
       render: (text) => {
-        return text ? text : "Unknown"
-      }
-    },
-    {
-      title: "Birthday",
-      dataIndex: "birthday",
-      key: "birthday",
-      render: (text) => {
-        return (text?.split("T")[0] ? <p>{text?.split("T")[0]}</p> : "Unknown")
-      }
+        return text ? text : "Unknown";
+      },
     },
     {
       title: "Action",
@@ -96,19 +115,24 @@ const UsersPage = () => {
   return (
     <Fragment>
       <Table
-            pagination={false}
-            title={() => (
-              <Flex justify="space-between" align="center">
-                <h1>{users?.map((user) => user.role)[0] === "client" ? "Clients" : "Only Users"} {total}</h1>{" "}
-                <Button type="dashed" onClick={() => showModal(form)}>
-                  Add
-                </Button>
-              </Flex>
-            )}
-            loading={loading}
-            columns={columns}
-            dataSource={users}
-          />
+        pagination={false}
+        title={() => (
+          <Flex justify="space-between" align="center">
+            <h1>
+              {users?.map((user) => user.role)[0] === "client"
+                ? "Clients"
+                : "Only Users"}{" "}
+              {total}
+            </h1>{" "}
+            <Button type="dashed" onClick={() => showModal(form)}>
+              Add
+            </Button>
+          </Flex>
+        )}
+        loading={loading}
+        columns={columns}
+        dataSource={users}
+      />
       <Pagination
         total={total}
         showSizeChanger={false}
@@ -180,14 +204,51 @@ const UsersPage = () => {
               },
             ]}
           >
-            <Input />
+            <Select
+              options={[
+                {
+                  value: "client",
+                  label: "Client",
+                },
+                {
+                  value: "user",
+                  label: "No client",
+                },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Birthday"
+            name="birthday"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Space direction="vertical">
+              <DatePicker onChange={onChange} />
+            </Space>
+          </Form.Item>
+          <Form.Item
+            label="Phone"
+            name="phoneNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input defaultValue="+998" />
           </Form.Item>
           <Form.Item
             label="Password"
             name="password"
             rules={[
               {
-                required: true,
+                required: false,
                 message: "Please fill!",
               },
             ]}
@@ -196,7 +257,7 @@ const UsersPage = () => {
           </Form.Item>
           <Form.Item
             label="Fields"
-            name="dsd"
+            name="fields"
             rules={[
               {
                 required: true,
@@ -219,18 +280,6 @@ const UsersPage = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Birthday"
-            name="birthday"
-            rules={[
-              {
-                required: true,
-                message: "Please fill!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
             label="Address"
             name="address"
             rules={[
@@ -242,6 +291,74 @@ const UsersPage = () => {
           >
             <Input />
           </Form.Item>
+          <Form.Item
+            label="Github username"
+            name="github"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Linkedin username"
+            name="linkedin"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Telegram username"
+            name="telegram"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Instagram username"
+            name="instagram"
+            rules={[
+              {
+                required: true,
+                message: "Please fill!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          {photo ? (
+            checkPhoto ? (
+              <div className="photo" width={"100%"} style={{position:"relative"}}>
+                <Image  width={"100%"} height={"60%"} src={`${BASE}upload/${photo}`} />
+                <Button
+                  style={{position:"absolute"}}
+                  loading={btnLoading}
+                  type="primary"
+                  className="delete-photo"
+                  onClick={() => deleteUserPhoto(photo)}
+                >
+                  <RiDeleteBin6Line style={{fontSize:"24px"}} />
+                </Button>
+              </div>
+            ) : (
+              <input disabled={btnLoading} type="file" onChange={handlePhoto} />
+            )
+          ) : (
+            <input disabled={btnLoading} type="file" onChange={handlePhoto} />
+          )}
         </Form>
       </Modal>
     </Fragment>

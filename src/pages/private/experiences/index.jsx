@@ -13,7 +13,6 @@ const ExperiencePage = () => {
   const {loading , callback , experiences , total , selected , btnLoading ,page , search , isOpen} = useSelector(state => state.experience);
   const [form] = Form.useForm()
 
-  console.log(experiences);
 
   useEffect(() => {
     console.log(user);
